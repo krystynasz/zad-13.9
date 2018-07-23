@@ -10,17 +10,24 @@ function start() {
 
     response.writeHead(200, {"Content-Type": "text/plain; charset=utf-8"});
 
-    switch (request.url) {
+    switch (request.url) { // switch rozróżniający zapytania
+        case '/style.css':
+        handlers.style(request, response);
+        break;
         case '/':
         case '/start':
             handlers.welcome(request, response);
             break;
+      
         case '/upload':
             handlers.upload(request, response);
             break;
         case '/show':
             handlers.show(request, response);
             break;
+        default:
+            handlers.error(request, response);
+    }
   }
 
   http.createServer(onRequest).listen(9000);
@@ -28,4 +35,4 @@ function start() {
   console.log("Uruchomiono serwer!".green);
 }
 
-exports.start = start
+exports.start = start;
